@@ -53,7 +53,7 @@ func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Reque
 	result := app.db.Create(&user)
 	if result.Error != nil {
 		switch {
-		case result.Error.Error() == `duplicate key value violates unique constraint "users_email_key" (SQLSTATE 23505)`:
+		case result.Error == gorm.ErrDuplicatedKey:
 			v.AddError("email", "a user with this email address already exists")
 			app.failedValidationResponse(w, r, v.Errors)
 		default:

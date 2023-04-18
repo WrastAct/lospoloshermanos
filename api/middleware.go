@@ -5,6 +5,7 @@ import (
 	"errors"
 	"expvar"
 	"fmt"
+	"net"
 	"net/http"
 
 	"strings"
@@ -158,6 +159,24 @@ func (app *application) requireActivatedUser(next http.HandlerFunc) http.Handler
 	})
 
 	return app.requireAuthenticatedUser(fn)
+}
+
+func (app *application) requireLocalConnection(next http.HandlerFunc) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ip, _, err := net.SplitHostPort(r.RemoteAddr)
+		if err != nil {
+			app.logError(r, err)
+			app.notFoundResponse(w, r)
+			return
+		}
+		netIP := net.ParseIP(ip)
+		if netIP != nil && netIP.String() == "127.0.0.1" {
+			next.ServeHTTP(w, r)
+			return
+		}
+
+		app.notFoundResponse(w, r)
+	})
 }
 
 func (app *application) requirePermission(code string, next http.HandlerFunc) http.HandlerFunc {

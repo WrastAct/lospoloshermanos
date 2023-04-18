@@ -16,17 +16,19 @@ var (
 var AnonymousUser = &User{}
 
 type User struct {
-	ID          uint64        `json:"id" gorm:"primaryKey"`
-	CreatedAt   time.Time     `json:"created_at"`
-	UpdatedAt   time.Time     `json:"-"`
-	Name        string        `json:"name" gorm:"not null"`
-	Birthday    string        `json:"birthday"`
-	Address     string        `json:"address"`
-	Email       string        `json:"email" gorm:"unique;not null"`
-	Password    []byte        `json:"-" gorm:"not null"`
-	Activated   bool          `json:"activated"`
-	Tokens      []Token       `json:"-"`
-	Permissions []Permissions `json:"-" gorm:"many2many:user_permissions;"`
+	ID             uint64        `json:"id" gorm:"primaryKey"`
+	CreatedAt      time.Time     `json:"created_at"`
+	UpdatedAt      time.Time     `json:"-"`
+	Name           string        `json:"name" gorm:"not null"`
+	Birthday       string        `json:"birthday"`
+	Address        string        `json:"address"`
+	Email          string        `json:"email" gorm:"unique;not null"`
+	Password       []byte        `json:"-" gorm:"not null"`
+	Activated      bool          `json:"activated"`
+	Tokens         []Token       `json:"-"`
+	Permissions    []Permissions `json:"-" gorm:"many2many:user_permissions;"`
+	SenderOrders   []Order       `json:"-" gorm:"foreignKey:SenderID;references:ID"`
+	ReceiverOrders []Order       `json:"-" gorm:"foreignKey:ReceiverID;references:ID"`
 }
 
 func (u *User) IsAnonymous() bool {

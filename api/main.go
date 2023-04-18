@@ -139,7 +139,7 @@ func main() {
 }
 
 func openDB(cfg config) (*gorm.DB, error) {
-	db, err := gorm.Open(postgres.Open(cfg.db.dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(cfg.db.dsn), &gorm.Config{TranslateError: true})
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func openDB(cfg config) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	if err = db.AutoMigrate(&data.User{}, &data.Token{}, &data.Permissions{}); err == nil && db.Migrator().HasTable(&data.Permissions{}) {
+	if err = db.AutoMigrate(&data.User{}, &data.Token{}, &data.Permissions{}, &data.Insurance{}, &data.Order{}, &data.Properties{}); err == nil && db.Migrator().HasTable(&data.Permissions{}) {
 		if err := db.First(&data.Permissions{}).Error; errors.Is(err, gorm.ErrRecordNotFound) {
 			db.Create(&[]data.Permissions{{Code: "admin"}, {Code: "user"}})
 		}
