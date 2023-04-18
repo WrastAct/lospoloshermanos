@@ -1,0 +1,47 @@
+{{define "subject"}}Ласкаво просимо до Maestro!{{end}}
+
+{{define "plainBody"}}
+Доброго дня,
+
+Дякуємо за реєстрацію акаунту Maestro. Ми раді бачити вас тут!
+
+На майбутнє, ваш ID номер користувача це {{.userID}}.
+
+Будь ласка, зробіть запит на `PUT /v1/users/activated` шлях з наступник JSON
+body для активації вашого акаунту:
+
+{"token": "{{.activationToken}}"}
+
+Просимо помітити, що даний токен є одноразовим, та діє 5 днів.
+
+Завжди ваша,
+
+Команда Maestro
+{{end}}
+
+{{define "htmlBody"}}
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="referrer" content="origin">
+</head>
+
+<div>
+    <p>Доброго дня,</p>
+    <p>Дякуємо за реєстрацію акаунту Maestro. Ми раді бачити вас тут!</p>
+    <p>На майбутнє, ваш ID номер користувача це {{.userID}}.</p>
+    <p>Будь ласка, зробіть запит на <code>PUT /v1/users/activated</code> шлях з наступник JSON
+body для активації вашого акаунту:</p>
+    <pre><code>
+    {"token": "{{.activationToken}}"}
+    </code></pre>
+    <p>Просимо помітити, що даний токен є одноразовим, та діє 5 днів.</p>
+    <p>Завжди ваша,</p>
+    <p>Команда Maestro</p>
+</div>
+
+</html>
+{{end}}

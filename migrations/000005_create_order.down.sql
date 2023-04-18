@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS order_properties;
+DROP TABLE IF EXISTS properties;
+DROP TABLE IF EXISTS "order";

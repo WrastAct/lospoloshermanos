@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  # api:
+  #   image: golang
+  #   restart: always
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: tobedone
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+# secrets:
+#   db_password:
+#     file: db_password.txt
+
+volumes:
+  postgres-data:
+    driver: local
