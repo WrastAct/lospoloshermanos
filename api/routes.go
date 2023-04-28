@@ -17,6 +17,18 @@ func (app *application) routes() http.Handler {
 	router.HandlerFunc(http.MethodGet, "/v1/healthcheck", app.requireAuthenticatedUser(app.healthcheckHandler))
 	router.HandlerFunc(http.MethodGet, "/v1/localhealthcheck", app.requireLocalConnection(app.healthcheckHandler))
 
+	router.HandlerFunc(http.MethodPost, "/v1/insurance", app.requireLocalConnection(app.createInsuranceHandler))
+	router.HandlerFunc(http.MethodGet, "/v1/insurance/:id", app.showInsuranceHandler)
+	router.HandlerFunc(http.MethodGet, "/v1/insurance", app.listInsuranceHandler)
+	router.HandlerFunc(http.MethodPatch, "/v1/insurance/:id", app.requireLocalConnection(app.updateInsuranceHandler))
+	router.HandlerFunc(http.MethodDelete, "/v1/insurance/:id", app.requireLocalConnection(app.deleteInsuranceHandler))
+
+	router.HandlerFunc(http.MethodPost, "/v1/order_properties", app.requireLocalConnection(app.createPropertyHandler))
+	router.HandlerFunc(http.MethodGet, "/v1/order_properties/:id", app.showPropertyHandler)
+	router.HandlerFunc(http.MethodGet, "/v1/order_properties", app.listPropertiesHandler)
+	router.HandlerFunc(http.MethodPatch, "/v1/order_properties/:id", app.requireLocalConnection(app.updatePropertyHandler))
+	router.HandlerFunc(http.MethodDelete, "/v1/order_properties/:id", app.requireLocalConnection(app.deletePropertyHandler))
+
 	router.HandlerFunc(http.MethodPost, "/v1/users", app.registerUserHandler)
 	router.HandlerFunc(http.MethodPut, "/v1/users/activated", app.activateUserHandler)
 
