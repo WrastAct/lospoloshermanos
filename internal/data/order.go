@@ -10,10 +10,10 @@ type Order struct {
 	InsuranceID     uint64       `json:"insurance_id"`
 	Value           float32      `json:"value" sql:"type:decimal(10,2);"`
 	Coverage        float32      `json:"coverage" sql:"type:decimal(3,2);"`
-	Properties      []Properties `json:"-" gorm:"many2many:order_properties;"`
+	Properties      []Properties `json:"properties" gorm:"many2many:order_properties;"`
 }
 
 type Properties struct {
-	ID   uint16 `json:"id" gorm:"primaryKey"`
+	ID   uint64 `json:"id" gorm:"primaryKey"`
 	Name string `json:"name"`
 }

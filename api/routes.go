@@ -23,6 +23,12 @@ func (app *application) routes() http.Handler {
 	router.HandlerFunc(http.MethodPatch, "/v1/insurance/:id", app.requireLocalConnection(app.updateInsuranceHandler))
 	router.HandlerFunc(http.MethodDelete, "/v1/insurance/:id", app.requireLocalConnection(app.deleteInsuranceHandler))
 
+	router.HandlerFunc(http.MethodPost, "/v1/order", app.createOrderHandler)
+	router.HandlerFunc(http.MethodGet, "/v1/order/:id", app.showOrderHandler)
+	router.HandlerFunc(http.MethodGet, "/v1/order", app.listOrdersHandler)
+	router.HandlerFunc(http.MethodPatch, "/v1/order/:id", app.updateOrderHandler)
+	router.HandlerFunc(http.MethodDelete, "/v1/order/:id", app.deleteOrderHandler)
+
 	router.HandlerFunc(http.MethodPost, "/v1/order_properties", app.requireLocalConnection(app.createPropertyHandler))
 	router.HandlerFunc(http.MethodGet, "/v1/order_properties/:id", app.showPropertyHandler)
 	router.HandlerFunc(http.MethodGet, "/v1/order_properties", app.listPropertiesHandler)

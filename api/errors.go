@@ -33,6 +33,21 @@ func (app *application) notFoundResponse(w http.ResponseWriter, r *http.Request)
 	app.errorResponse(w, r, http.StatusNotFound, message)
 }
 
+func (app *application) senderNotFoundResponse(w http.ResponseWriter, r *http.Request) {
+	message := "sender could not be found"
+	app.errorResponse(w, r, http.StatusNotFound, message)
+}
+
+func (app *application) receiverNotFoundResponse(w http.ResponseWriter, r *http.Request) {
+	message := "recipient could not be found"
+	app.errorResponse(w, r, http.StatusNotFound, message)
+}
+
+func (app *application) insuranceNotFoundResponse(w http.ResponseWriter, r *http.Request) {
+	message := "insurance company could not be found"
+	app.errorResponse(w, r, http.StatusNotFound, message)
+}
+
 func (app *application) methodNotAllowedResponse(w http.ResponseWriter, r *http.Request) {
 	message := fmt.Sprintf("the %s method is not supported for this resource", r.Method)
 	app.errorResponse(w, r, http.StatusMethodNotAllowed, message)
