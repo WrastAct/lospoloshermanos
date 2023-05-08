@@ -40,6 +40,10 @@ func (app *application) routes() http.Handler {
 
 	router.HandlerFunc(http.MethodPost, "/v1/tokens/authentication", app.createAuthenticationTokenHandler)
 
+	router.HandlerFunc(http.MethodGet, "/v1/admin/query", app.requireLocalConnection(app.customQueryHandler))
+	router.HandlerFunc(http.MethodGet, "/v1/admin/tables", app.requireLocalConnection(app.listTablesHandler))
+	router.HandlerFunc(http.MethodGet, "/v1/admin/table_description", app.requireLocalConnection(app.describeTableHandler))
+
 	router.Handler(http.MethodGet, "/debug/vars", expvar.Handler())
 
 	return app.metrics(app.recoverPanic(app.enableCORS(app.rateLimit(app.authenticate(router)))))
