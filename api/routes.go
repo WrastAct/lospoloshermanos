@@ -15,7 +15,6 @@ func (app *application) routes() http.Handler {
 	router.MethodNotAllowed = http.HandlerFunc(app.methodNotAllowedResponse)
 
 	router.HandlerFunc(http.MethodGet, "/v1/healthcheck", app.requireAuthenticatedUser(app.healthcheckHandler))
-	router.HandlerFunc(http.MethodGet, "/v1/localhealthcheck", app.requireLocalConnection(app.healthcheckHandler))
 
 	router.HandlerFunc(http.MethodPost, "/v1/insurance", app.requireLocalConnection(app.createInsuranceHandler))
 	router.HandlerFunc(http.MethodGet, "/v1/insurance/:id", app.showInsuranceHandler)
@@ -40,6 +39,7 @@ func (app *application) routes() http.Handler {
 
 	router.HandlerFunc(http.MethodPost, "/v1/tokens/authentication", app.createAuthenticationTokenHandler)
 
+	router.HandlerFunc(http.MethodGet, "/v1/admin/healthcheck", app.requireLocalConnection(app.healthcheckHandler))
 	router.HandlerFunc(http.MethodGet, "/v1/admin/query", app.requireLocalConnection(app.customQueryHandler))
 	router.HandlerFunc(http.MethodGet, "/v1/admin/tables", app.requireLocalConnection(app.listTablesHandler))
 	router.HandlerFunc(http.MethodGet, "/v1/admin/table_description", app.requireLocalConnection(app.describeTableHandler))
