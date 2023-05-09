@@ -20,13 +20,18 @@ func (app *application) customQueryHandler(w http.ResponseWriter, r *http.Reques
 	query := input.Query
 	var queryResult []map[string]interface{}
 
+	var message envelope
+	status := http.StatusAccepted
+
 	result := app.db.Raw(query).Scan(&queryResult)
 	if result.Error != nil {
-		app.serverErrorResponse(w, r, result.Error)
-		return
+		message = envelope{"error": result.Error.Error()}
+		status = http.StatusBadRequest
+	} else {
+		message = envelope{"result": queryResult}
 	}
 
-	err = app.writeJSON(w, http.StatusAccepted, envelope{"result": queryResult}, nil)
+	err = app.writeJSON(w, status, message, nil)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}
