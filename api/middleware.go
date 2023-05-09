@@ -147,20 +147,6 @@ func (app *application) requireAuthenticatedUser(next http.HandlerFunc) http.Han
 	})
 }
 
-func (app *application) requireActivatedUser(next http.HandlerFunc) http.HandlerFunc {
-	fn := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		user := app.contextGetUser(r)
-
-		if !user.Activated {
-			app.inactiveAccountResponse(w, r)
-			return
-		}
-		next.ServeHTTP(w, r)
-	})
-
-	return app.requireAuthenticatedUser(fn)
-}
-
 func (app *application) requireLocalConnection(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ip, _, err := net.SplitHostPort(r.RemoteAddr)
@@ -177,42 +163,6 @@ func (app *application) requireLocalConnection(next http.HandlerFunc) http.Handl
 
 		app.notFoundResponse(w, r)
 	})
-}
-
-func (app *application) requirePermission(code string, next http.HandlerFunc) http.HandlerFunc {
-	fn := func(w http.ResponseWriter, r *http.Request) {
-		user := app.contextGetUser(r)
-
-		var permissions []data.Permissions
-
-		result := app.db.Table("permissions").
-			Select("code").
-			InnerJoins("user_permissions").
-			InnerJoins("user").
-			Where("user.id = ?", user.ID).
-			Scan(&permissions)
-
-		//permissions, err := app.models.Permissions.GetAllForUser(user.ID)
-		if result.Error != nil {
-			app.serverErrorResponse(w, r, result.Error)
-			return
-		}
-
-		var permissionCodes data.UserPermissions
-
-		for _, v := range permissions {
-			permissionCodes = append(permissionCodes, v.Code)
-		}
-
-		if !permissionCodes.Include(code) {
-			app.notPermittedResponse(w, r)
-			return
-		}
-
-		next.ServeHTTP(w, r)
-	}
-
-	return app.requireActivatedUser(fn)
 }
 
 func (app *application) enableCORS(next http.Handler) http.Handler {
