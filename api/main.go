@@ -167,7 +167,14 @@ func openDB(cfg config) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	if err = db.AutoMigrate(&data.User{}, &data.Token{}, &data.Permissions{}, &data.Insurance{}, &data.Order{}, &data.Properties{}); err == nil && db.Migrator().HasTable(&data.Permissions{}) {
+	if err = db.AutoMigrate(&data.User{},
+		&data.Token{},
+		&data.Permissions{},
+		&data.Insurance{},
+		&data.Order{},
+		&data.Properties{},
+		&data.PackageStats{},
+	); err == nil && db.Migrator().HasTable(&data.Permissions{}) {
 		if err := db.First(&data.Permissions{}).Error; errors.Is(err, gorm.ErrRecordNotFound) {
 			db.Create(&[]data.Permissions{{Code: "admin"}, {Code: "user"}})
 		}
