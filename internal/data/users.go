@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/WrastAct/maestro/internal/validator"
+	"github.com/WrastAct/lospoloshermanos/internal/validator"
 
 	"golang.org/x/crypto/bcrypt"
 )

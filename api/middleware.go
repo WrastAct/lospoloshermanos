@@ -12,8 +12,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/WrastAct/maestro/internal/data"
-	"github.com/WrastAct/maestro/internal/validator"
+	"github.com/WrastAct/lospoloshermanos/internal/data"
+	"github.com/WrastAct/lospoloshermanos/internal/validator"
 	"gorm.io/gorm"
 
 	"github.com/tomasen/realip"

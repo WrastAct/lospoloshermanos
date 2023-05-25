@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/WrastAct/maestro/internal/data"
+	"github.com/WrastAct/lospoloshermanos/internal/data"
 )
 
 func (app *application) customQueryHandler(w http.ResponseWriter, r *http.Request) {

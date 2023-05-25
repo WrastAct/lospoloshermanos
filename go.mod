@@ -1,4 +1,4 @@
-module github.com/WrastAct/maestro
+module github.com/WrastAct/lospoloshermanos
 
 go 1.19
 

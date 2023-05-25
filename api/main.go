@@ -12,9 +12,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/WrastAct/maestro/internal/data"
-	"github.com/WrastAct/maestro/internal/jsonlog"
-	"github.com/WrastAct/maestro/internal/mailer"
+	"github.com/WrastAct/lospoloshermanos/internal/data"
+	"github.com/WrastAct/lospoloshermanos/internal/jsonlog"
+	"github.com/WrastAct/lospoloshermanos/internal/mailer"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

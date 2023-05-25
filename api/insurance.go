@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/WrastAct/maestro/internal/data"
+	"github.com/WrastAct/lospoloshermanos/internal/data"
 	"gorm.io/gorm"
 )
 

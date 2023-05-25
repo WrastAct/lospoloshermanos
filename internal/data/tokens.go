@@ -6,7 +6,7 @@ import (
 	"encoding/base32"
 	"time"
 
-	"github.com/WrastAct/maestro/internal/validator"
+	"github.com/WrastAct/lospoloshermanos/internal/validator"
 )
 
 const (
