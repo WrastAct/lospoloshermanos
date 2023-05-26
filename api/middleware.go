@@ -175,7 +175,8 @@ func (app *application) enableCORS(next http.Handler) http.Handler {
 
 		if origin != "" {
 			for i := range app.config.cors.trustedOrigins {
-				if origin == app.config.cors.trustedOrigins[i] {
+				if origin == app.config.cors.trustedOrigins[i] ||
+					app.config.cors.trustedOrigins[i] == "*" {
 					w.Header().Set("Access-Control-Allow-Origin", origin)
 
 					if r.Method == http.MethodOptions && r.Header.Get("Access-Control-Request-Method") != "" {
